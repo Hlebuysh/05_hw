@@ -1,11 +1,10 @@
-name: C CI
+name: CI
 
 on:
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
-  workflow_dispatch:
 
 jobs:
   build-and-test:
@@ -13,19 +12,26 @@ jobs:
     
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     
-    - name: Install dependencies (if needed)
+    - name: Clean any existing build artifacts
+      run: |
+        rm -rf build build-* Debug Release
+    
+    - name: Install CMake
       run: |
         sudo apt-get update
-        # Добавьте зависимости, если нужны специфичные пакеты
+        sudo apt-get install -y cmake
     
     - name: Configure CMake
       run: |
-        cmake -B build \
+        cmake -B build -S . \
           -DCMAKE_BUILD_TYPE=Release \
-          -DCMAKE_C_STANDARD=11
+          -DCMAKE_C_STANDARD=11 \
+          -Wno-dev
     
-    - name: Build all targets
+    - name: Build
       run: |
         cmake --build build --config Release --parallel 4
     
@@ -34,12 +40,12 @@ jobs:
         cd build
         ./test_stack
     
-    - name: Run benchmarks (optional)
+    - name: Run benchmark
       run: |
         cd build
         ./bench
     
-    - name: Run main program
+    - name: Run main
       run: |
         cd build
         ./main
