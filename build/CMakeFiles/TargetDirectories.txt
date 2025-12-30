@@ -1,0 +1,6 @@
+/mnt/d/Programming/C/lecture2/lecture-testing-task-main/05_hw/build/CMakeFiles/stack.dir
+/mnt/d/Programming/C/lecture2/lecture-testing-task-main/05_hw/build/CMakeFiles/main.dir
+/mnt/d/Programming/C/lecture2/lecture-testing-task-main/05_hw/build/CMakeFiles/test_stack.dir
+/mnt/d/Programming/C/lecture2/lecture-testing-task-main/05_hw/build/CMakeFiles/bench.dir
+/mnt/d/Programming/C/lecture2/lecture-testing-task-main/05_hw/build/CMakeFiles/edit_cache.dir
+/mnt/d/Programming/C/lecture2/lecture-testing-task-main/05_hw/build/CMakeFiles/rebuild_cache.dir

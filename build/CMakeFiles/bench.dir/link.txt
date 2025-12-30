@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/bench.dir/benchmarks/bench_stack.c.o -o bench  libstack.a 
