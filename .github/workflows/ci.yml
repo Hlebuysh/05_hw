@@ -33,6 +33,13 @@ jobs:
     - name: Run coverage
       run: |
         sudo apt-get install -y lcov
+        # Добавьте эти две строки, чтобы сгенерировать Makefile заново
+        cmake . 
+        make coverage
+        ls -la coverage-report
+    - name: Run coverage
+      run: |
+        sudo apt-get install -y lcov
         make coverage
         ls -la coverage-report
     - name: Upload coverage artifact
