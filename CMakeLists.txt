@@ -9,8 +9,18 @@ add_library(stack
     stack.c
 )
 
-target_compile_options(your_executable_target PRIVATE "-fprofile-arcs" "-ftest-coverage")
-target_link_options(your_executable_target PRIVATE "-fprofile-arcs" "-ftest-coverage")
+target_compile_options(stack PRIVATE "-fprofile-arcs" "-ftest-coverage")
+target_link_options(stack PRIVATE "-fprofile-arcs" "-ftest-coverage")
+
+target_compile_options(main PRIVATE "-fprofile-arcs" "-ftest-coverage")
+target_link_options(main PRIVATE "-fprofile-arcs" "-ftest-coverage")
+
+target_compile_options(test_stack PRIVATE "-fprofile-arcs" "-ftest-coverage")
+target_link_options(test_stack PRIVATE "-fprofile-arcs" "-ftest-coverage")
+
+target_compile_options(bench PRIVATE "-fprofile-arcs" "-ftest-coverage")
+target_link_options(bench PRIVATE "-fprofile-arcs" "-ftest-coverage")
+
 
 target_include_directories(stack PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
