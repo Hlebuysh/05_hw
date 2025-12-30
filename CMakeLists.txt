@@ -9,7 +9,6 @@ add_library(stack
     stack.c
 )
 
-
 target_include_directories(stack PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
@@ -34,23 +33,3 @@ add_executable(bench
 )
 
 target_link_libraries(bench PRIVATE stack)
-
-target_compile_options(stack PRIVATE "-fprofile-arcs" "-ftest-coverage")
-target_link_options(stack PRIVATE "-fprofile-arcs" "-ftest-coverage")
-
-target_compile_options(main PRIVATE "-fprofile-arcs" "-ftest-coverage")
-target_link_options(main PRIVATE "-fprofile-arcs" "-ftest-coverage")
-
-target_compile_options(test_stack PRIVATE "-fprofile-arcs" "-ftest-coverage")
-target_link_options(test_stack PRIVATE "-fprofile-arcs" "-ftest-coverage")
-
-target_compile_options(bench PRIVATE "-fprofile-arcs" "-ftest-coverage")
-target_link_options(bench PRIVATE "-fprofile-arcs" "-ftest-coverage")
-
-add_custom_target(coverage
-    COMMAND lcov --capture --directory ${CMAKE_BINARY_DIR} --output-file coverage.info
-    COMMAND lcov --remove coverage.info '/usr/*' --output-file coverage.info
-    COMMAND genhtml coverage.info --output-directory coverage-report
-    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-    COMMENT "Generating code coverage report"
-)

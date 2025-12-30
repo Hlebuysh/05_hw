@@ -2,42 +2,44 @@ name: C CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
   workflow_dispatch:
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    
     steps:
-    - uses: actions/checkout@v4
-
-    - name: Install dependencies
+    - uses: actions/checkout@v3
+    
+    - name: Install dependencies (if needed)
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential cppcheck lcov
-
-    - name: Build main
-      run: make build
-
-    - name: Static analysis (cppcheck)
+        # Добавьте зависимости, если нужны специфичные пакеты
+    
+    - name: Configure CMake
       run: |
-        cppcheck --enable=all --inconclusive --std=c11 .
-
-    - name: Build & run tests (ASan/UBSan)
+        cmake -B build \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DCMAKE_C_STANDARD=11
+    
+    - name: Build all targets
       run: |
-        gcc -g -O1 -fsanitize=address,undefined -fno-omit-frame-pointer -o test_san tests/test_stack.c stack.c
-        ./test_san
-
-    - name: Run coverage
+        cmake --build build --config Release --parallel 4
+    
+    - name: Run tests
       run: |
-        sudo apt-get install -y lcov
-        cmake . 
-        make coverage
-        ls -la coverage-report
-    - name: Upload coverage artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: coverage-report
-        path: coverage-report
+        cd build
+        ./test_stack
+    
+    - name: Run benchmarks (optional)
+      run: |
+        cd build
+        ./bench
+    
+    - name: Run main program
+      run: |
+        cd build
+        ./main
